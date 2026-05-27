@@ -2,7 +2,7 @@
 
 A browser tool that generates the welded steel baseframe for an API 610 pump-and-driver set. Choose a pump and a driver; it sizes the frame and crossmembers, lays out the machined mounting pads and bolt holes, sets the deck drainage slope, estimates steel mass and cost, and exports a DXF drawing plus an OnShape configuration payload. Everything updates live as you change inputs.
 
-> Live demo: _add your Netlify URL here_
+> **Live demo:** <https://skidgen.netlify.app/>
 
 ## What it generates
 

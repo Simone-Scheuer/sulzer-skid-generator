@@ -107,20 +107,6 @@ table.specs td .u { color:var(--faint); font-size:.7rem; margin-left:3px; }
 .cost-row td:last-child { color:var(--accent); font-weight:600; }
 .note { font-family:var(--mono); font-size:.66rem; color:var(--amber); padding:10px 14px; border-top:1px solid var(--rule); line-height:1.5; }
 
-/* Fabrication notes + hole schedule */
-.fab { display:grid; grid-template-columns:1fr; gap:0; }
-@media (min-width:720px) { .fab { grid-template-columns:1.3fr 1fr; } }
-ol.notes {
-  margin:0; padding:14px 14px 14px 32px; font-family:var(--mono); font-size:.7rem;
-  color:var(--dim); line-height:1.65; border-right:1px solid var(--rule);
-}
-@media (max-width:719px) { ol.notes { border-right:none; border-bottom:1px solid var(--rule); } }
-ol.notes li { margin-bottom:6px; }
-.sched-h {
-  font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--faint); padding:11px 14px 4px;
-}
-
 /* OnShape payload */
 .json-meta {
   display:flex; justify-content:space-between; align-items:center; gap:12px;

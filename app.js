@@ -250,31 +250,6 @@ function renderSpecs(m) {
 }
 
 // ---------------------------------------------------------------------------
-// Fabrication notes + hole schedule
-// ---------------------------------------------------------------------------
-function renderNotes(m) {
-  const notes = [
-    `Material: frame ${m.grade} structural channel; deck 6 mm plate, seal-welded.`,
-    `All structural welds 6 mm continuous fillet, all-around, to AWS D1.1.`,
-    `Equipment mounting pads machined flat and coplanar within 0.10 mm after welding.`,
-    `Deck sloped 1:${m.slopeRatio} (${m.slopePct.toFixed(2)}%) toward pump end for drainage.`,
-    `Hold-down holes drilled to suit pump ${m.pumpBolt.size} / driver ${m.driverBolt.size}, clearance +2 mm.`,
-    `Anchor holes ${m.anchorBolt.size} at perimeter, ${m.anchorCount} off; grout to foundation per spec.`,
-    `Hot-dip galvanize or paint per project specification.`,
-    `Skid stress-relieved prior to final pad machining.`,
-  ];
-  el('notes').innerHTML = notes.map(n => `<li>${n}</li>`).join('');
-
-  const schedule = [
-    ['Pump hold-down', 4, `Ø${m.pumpBolt.hole} (${m.pumpBolt.size})`],
-    ['Driver hold-down', 4, `Ø${m.driverBolt.hole} (${m.driverBolt.size})`],
-    ['Anchor', m.anchorCount, `Ø${m.anchorBolt.hole} (${m.anchorBolt.size})`],
-  ];
-  el('sched').innerHTML = `<tr><td>Mark</td><td>Qty · Ø</td></tr>` +
-    schedule.map(([k, q, d]) => `<tr><td>${k}</td><td>${q} × ${d}</td></tr>`).join('');
-}
-
-// ---------------------------------------------------------------------------
 // OnShape configuration payload (configuration-update format)
 // ---------------------------------------------------------------------------
 function renderConfigPayload(m) {
@@ -510,7 +485,6 @@ function render() {
   const m = buildModel();
   renderPlan(m);
   renderSpecs(m);
-  renderNotes(m);
   renderConfigPayload(m);
   buildScene(m);
   lastModel = m;

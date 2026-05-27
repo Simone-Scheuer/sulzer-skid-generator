@@ -243,10 +243,6 @@ function renderSpecs(m) {
   let html = rows.map(([k, v, u]) => `<tr><td>${k}</td><td>${v}<span class="u">${u}</span></td></tr>`).join('');
   html += `<tr class="cost-row"><td>Est. fabricated cost</td><td>$${num(m.cost)}</td></tr>`;
   el('specs').innerHTML = html;
-
-  el('note').textContent = m.shim > 0
-    ? `Shaft heights differ ${m.shim} mm. A ${m.shim} mm machined pad shim is added under the ${m.lower} so the coupling aligns; all pads machined coplanar within 0.10 mm after welding.`
-    : `Shaft heights matched. All mounting pads machined coplanar within 0.10 mm after welding for true alignment.`;
 }
 
 // ---------------------------------------------------------------------------
@@ -447,31 +443,30 @@ function buildScene(m) {
 
   const topY = H + 0.012, PAD_H = 0.025;
 
-  // Machined pads under each foot.
+  // Pads, anchors, equipment and coupling are parented to the frame group so
+  // they tilt with the deck and stay flush at any drainage slope.
   m.pads.forEach(p => {
     const pad = makeBox(0.14, PAD_H, 0.14, 0xb9c4ce, 0.6, 0.35);
     pad.position.set((p.x + 70) * S - L / 2, topY + PAD_H / 2, (p.y + 70) * S - W / 2);
-    g.add(pad);
+    frame.add(pad);
   });
-  // Anchor studs at the perimeter.
   m.holes.filter(h => h.t === 'anchor').forEach(h => {
     const stud = makeBox(0.05, 0.05, 0.05, 0x2b3038, 0.5, 0.5);
     stud.position.set(h.x * S - L / 2, topY + 0.025, h.y * S - W / 2);
-    g.add(stud);
+    frame.add(stud);
   });
 
-  // Equipment blocks sit level on the pads.
   const pumpX = m.pumpCx * S - L / 2, driverX = m.driverCx * S - L / 2;
   const pump = makeBox(m.pump.L * S, m.pump.H * S, m.pump.W * S, 0x2f9e8f, 0.45, 0.55);
-  pump.position.set(pumpX, topY + PAD_H + m.pump.H * S / 2, 0); g.add(pump);
+  pump.position.set(pumpX, topY + PAD_H + m.pump.H * S / 2, 0); frame.add(pump);
   const driver = makeBox(m.driver.L * S, m.driver.H * S, m.driver.W * S, 0x4f7fae, 0.45, 0.55);
-  driver.position.set(driverX, topY + PAD_H + m.driver.H * S / 2, 0); g.add(driver);
+  driver.position.set(driverX, topY + PAD_H + m.driver.H * S / 2, 0); frame.add(driver);
 
   // Spacer coupling + guard bridging the shaft ends.
   const couplingX = (m.endClear + m.pump.L + m.gap / 2) * S - L / 2;
   const shaftCentre = Math.max(m.pump.shaft, m.driver.shaft) * S;
   const coupling = makeBox(m.gap * S + 0.10, 0.13, 0.13, 0xc9923a, 0.4, 0.6);
-  coupling.position.set(couplingX, topY + PAD_H + shaftCentre, 0); g.add(coupling);
+  coupling.position.set(couplingX, topY + PAD_H + shaftCentre, 0); frame.add(coupling);
 
   if (scene3d.resize) scene3d.resize();
 }

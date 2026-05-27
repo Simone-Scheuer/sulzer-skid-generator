@@ -105,7 +105,6 @@ table.specs td:last-child { text-align:right; }
 table.specs td .u { color:var(--faint); font-size:.7rem; margin-left:3px; }
 .cost-row td { font-size:.92rem !important; }
 .cost-row td:last-child { color:var(--accent); font-weight:600; }
-.note { font-family:var(--mono); font-size:.66rem; color:var(--amber); padding:10px 14px; border-top:1px solid var(--rule); line-height:1.5; }
 
 /* OnShape payload */
 .json-meta {

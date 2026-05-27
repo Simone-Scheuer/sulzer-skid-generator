@@ -1,0 +1,139 @@
+/* Pump Skid Baseframe Generator - styles
+   Engineering-instrument theme: hairline rules, monospace data, restrained palette. */
+
+:root {
+  --bg:#0c0e12; --ink:#e9edf1; --dim:#7e8895; --faint:#4a525c;
+  --rule:#242a32; --panel:#11141a; --inset:#0a0c10;
+  --accent:#36b3a8; --blue:#5aa9e6; --amber:#d9a441;
+  --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+}
+
+* { box-sizing:border-box; }
+
+html, body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--sans); line-height:1.4; -webkit-font-smoothing:antialiased;
+}
+
+.sheet { max-width:1120px; margin:0 auto; padding:0 14px 64px; }
+.topbar { height:4px; background:var(--accent); opacity:.85; }
+
+/* Title block */
+.tb { border:1px solid var(--rule); border-top:none; }
+.tb-main { display:flex; justify-content:space-between; align-items:flex-end; padding:16px 16px 12px; }
+.tb-title { font-size:1.04rem; font-weight:600; letter-spacing:.02em; }
+.tb-title .t2 {
+  display:block; font-family:var(--mono); font-size:.7rem; color:var(--dim);
+  letter-spacing:.18em; text-transform:uppercase; margin-top:5px; font-weight:400;
+}
+.tb-meta { display:grid; grid-template-columns:repeat(4,auto); font-family:var(--mono); font-size:.66rem; color:var(--dim); }
+.tb-meta div { border-left:1px solid var(--rule); padding:0 12px; }
+.tb-meta b { display:block; color:var(--ink); font-weight:500; font-size:.74rem; margin-top:2px; }
+
+@media (max-width:680px) {
+  .tb-main { flex-direction:column; align-items:flex-start; gap:12px; }
+  .tb-meta { grid-template-columns:repeat(2,1fr); width:100%; }
+  .tb-meta div:nth-child(odd) { border-left:none; }
+}
+
+.intro {
+  font-size:.9rem; color:var(--dim); padding:20px 2px 26px;
+  max-width:60ch; line-height:1.65; text-align:center; margin:0 auto;
+}
+.intro b { color:var(--ink); }
+
+/* Block layout */
+.cols { display:grid; grid-template-columns:1fr; gap:18px; }
+
+.block { border:1px solid var(--rule); background:var(--panel); }
+.block > .bh {
+  font-family:var(--mono); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--dim); padding:10px 14px; border-bottom:1px solid var(--rule);
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+}
+.bh .tag { color:var(--faint); }
+.bh .right { display:flex; gap:10px; align-items:center; }
+
+/* Configuration form */
+.bbody { padding:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px 18px; }
+.field { display:flex; flex-direction:column; min-width:0; }
+label {
+  display:block; font-family:var(--mono); font-size:.62rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--dim); margin:0 0 8px; line-height:1.3;
+}
+select, input {
+  width:100%; background:var(--inset); color:var(--ink); border:1px solid var(--rule);
+  border-radius:2px; padding:12px; font-size:.92rem; font-family:var(--sans); -webkit-appearance:none;
+}
+select:focus, input:focus { outline:none; border-color:var(--accent); }
+
+/* 3D preview */
+#view {
+  width:100%; height:420px; background:linear-gradient(180deg,#0e1116,#0a0c10);
+  border-bottom:1px solid var(--rule); display:block; touch-action:none;
+}
+@media (max-width:680px) { #view { height:280px; } }
+.legend3d {
+  display:flex; flex-wrap:wrap; gap:18px; padding:11px 14px; border-bottom:1px solid var(--rule);
+  font-family:var(--mono); font-size:.62rem; letter-spacing:.08em; color:var(--dim);
+}
+.legend3d span { display:inline-flex; align-items:center; gap:7px; }
+.legend3d i { width:11px; height:11px; border-radius:2px; display:inline-block; }
+.v-hint { font-family:var(--mono); font-size:.6rem; color:var(--faint); padding:7px 14px; letter-spacing:.06em; }
+.v-fallback { padding:24px 14px; color:var(--amber); font-family:var(--mono); font-size:.78rem; }
+
+/* Plan drawing */
+svg.plan { width:100%; height:auto; display:block; background:var(--inset); }
+
+/* Buttons */
+.btn {
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase;
+  background:var(--accent); color:#06110f; border:1px solid var(--accent); border-radius:2px;
+  padding:6px 12px; cursor:pointer; font-weight:600;
+}
+.btn:active { transform:translateY(1px); }
+.btn.ghost { background:transparent; color:var(--dim); border-color:var(--rule); font-weight:400; }
+.btn.ghost:hover { color:var(--ink); border-color:var(--accent); }
+
+/* Spec + schedule tables */
+table.specs { width:100%; border-collapse:collapse; font-family:var(--mono); font-size:.78rem; }
+table.specs td { padding:8px 14px; border-bottom:1px solid var(--rule); }
+table.specs tr:last-child td { border-bottom:none; }
+table.specs td:first-child { color:var(--dim); letter-spacing:.04em; }
+table.specs td:last-child { text-align:right; }
+table.specs td .u { color:var(--faint); font-size:.7rem; margin-left:3px; }
+.cost-row td { font-size:.92rem !important; }
+.cost-row td:last-child { color:var(--accent); font-weight:600; }
+.note { font-family:var(--mono); font-size:.66rem; color:var(--amber); padding:10px 14px; border-top:1px solid var(--rule); line-height:1.5; }
+
+/* Fabrication notes + hole schedule */
+.fab { display:grid; grid-template-columns:1fr; gap:0; }
+@media (min-width:720px) { .fab { grid-template-columns:1.3fr 1fr; } }
+ol.notes {
+  margin:0; padding:14px 14px 14px 32px; font-family:var(--mono); font-size:.7rem;
+  color:var(--dim); line-height:1.65; border-right:1px solid var(--rule);
+}
+@media (max-width:719px) { ol.notes { border-right:none; border-bottom:1px solid var(--rule); } }
+ol.notes li { margin-bottom:6px; }
+.sched-h {
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--faint); padding:11px 14px 4px;
+}
+
+/* OnShape payload */
+.json-meta {
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  padding:9px 14px; border-bottom:1px solid var(--rule);
+}
+.json-meta .ep { font-family:var(--mono); font-size:.6rem; color:var(--blue); letter-spacing:.01em; overflow:auto; white-space:nowrap; }
+pre {
+  margin:0; padding:14px; background:var(--inset); font-family:var(--mono); font-size:.72rem;
+  color:#bfe0db; overflow:auto; max-height:320px; line-height:1.5;
+}
+
+/* Footer */
+.foot { padding:0; }
+.foot-by { font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--ink); padding:13px 16px; border-bottom:1px solid var(--rule); }
+.foot-note { font-family:var(--mono); font-size:.62rem; color:var(--faint); line-height:1.7; letter-spacing:.02em; padding:13px 16px; }
+.foot-note span { color:var(--blue); }

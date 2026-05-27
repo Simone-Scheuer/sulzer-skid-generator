@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pump Skid Baseframe Generator · API 610</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="topbar"></div>
+  <div class="sheet">
+
+    <div class="tb">
+      <div class="tb-main">
+        <div class="tb-title">PUMP SKID · Parametric Baseframe Generator
+          <span class="t2">Config &rarr; frame · pads · holes · drawing · OnShape</span>
+        </div>
+        <div class="tb-meta">
+          <div>DRAWN BY<b>S. SCHEUER</b></div>
+          <div>STD<b>API 610</b></div>
+          <div>SCALE<b>NTS</b></div>
+          <div>REV<b>A</b></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="intro">Pick a pump and a driver, and the steel baseframe builds in real time: sized frame and crossmembers, machined mounting pads, matched hold-down and anchor holes, drainage slope, mass and cost. Export a real <b>DXF</b> drawing or the <b>OnShape</b> config. Change any input and the specs update below.</p>
+
+    <div class="cols">
+      <div class="block">
+        <div class="bh">Configuration <span class="tag">INPUT</span></div>
+        <div class="bbody">
+          <div class="field"><label for="pump">Pump · Sulzer API 610</label><select id="pump"></select></div>
+          <div class="field"><label for="driver">Driver</label><select id="driver"></select></div>
+          <div class="field"><label for="gap">Coupling gap (mm)</label><input id="gap" type="number" value="350" min="150" max="900" step="10"></div>
+          <div class="field"><label for="clear">Side clearance (mm)</label><input id="clear" type="number" value="200" min="100" max="500" step="10"></div>
+          <div class="field"><label for="slope">Deck drainage slope</label><select id="slope">
+            <option value="120">1:120, API 610 min (0.83%)</option>
+            <option value="100">1:100 (1.0%)</option>
+            <option value="50">1:50, as-built (~2.0%)</option>
+          </select></div>
+          <div class="field"><label for="grade">Frame steel grade</label><select id="grade">
+            <option value="S275JR">S275JR (mild)</option>
+            <option value="S355JR">S355JR (high-strength)</option>
+            <option value="A240-316L">316L (stainless)</option>
+          </select></div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bh">Assembly preview <span class="tag">3D · drag to orbit</span></div>
+        <canvas id="view"></canvas>
+        <div class="legend3d">
+          <span><i style="background:#2f9e8f"></i>Pump</span>
+          <span><i style="background:#4f7fae"></i>Driver</span>
+          <span><i style="background:#8a96a3"></i>Steel frame + deck</span>
+          <span><i style="background:#b9c4ce"></i>Machined pad</span>
+          <span><i style="background:#2b3038;border:1px solid #4a525c"></i>Anchor bolt</span>
+          <span><i style="background:#c9923a"></i>Coupling guard</span>
+        </div>
+        <div class="v-hint" id="vhint">render · API 610 deck drainage slope · drag to orbit</div>
+      </div>
+
+      <div class="block">
+        <div class="bh">Baseframe · plan
+          <span class="right"><span class="tag">DIM mm</span><button class="btn" id="dxf">Download DXF</button></span></div>
+        <svg class="plan" id="plan" viewBox="0 0 100 60" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+
+      <div class="block">
+        <div class="bh">Computed specification <span class="tag">OUTPUT</span></div>
+        <table class="specs" id="specs"></table>
+        <div class="note" id="note"></div>
+      </div>
+
+      <div class="block">
+        <div class="bh">Fabrication · notes &amp; hole schedule <span class="tag">OUTPUT</span></div>
+        <div class="fab">
+          <ol class="notes" id="notes"></ol>
+          <div>
+            <div class="sched-h">Hole schedule</div>
+            <table class="specs" id="sched"></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="bh">OnShape configuration <span class="right"><span class="tag">PAYLOAD</span><button class="btn ghost" id="copy">Copy</button></span></div>
+        <div class="json-meta">
+          <span class="ep" id="endpoint">POST /api/v10/configurations/d/{did}/w/{wid}/e/{eid}</span>
+        </div>
+        <pre id="json"></pre>
+      </div>
+
+      <div class="block foot">
+        <div class="foot-by">Prototype by Simone Scheuer · built with Claude</div>
+        <div class="foot-note">Pump model families (OHH/OHHL/MBN/BBT/HPT) and IEC driver frames are real Sulzer / standard designations; stated dimensions are representative. Frame and weld sizing use simplified rules (×1.5 dynamic factor) for demonstration and would be checked against load calcs. The DXF is a real multi-layer drawing; the payload follows the OnShape configuration-update format (<span>currentConfiguration</span> · BTMParameter btTypes) and models the assembly inputs without a live OnShape write.</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
